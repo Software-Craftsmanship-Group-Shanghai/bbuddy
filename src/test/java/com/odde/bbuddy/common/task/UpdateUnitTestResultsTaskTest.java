@@ -3,6 +3,7 @@ package com.odde.bbuddy.common.task;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -49,6 +50,7 @@ public class UpdateUnitTestResultsTaskTest {
         sourceTestResultsFolder = tmpFolder.getRoot() + separator + "build" + separator + "test-results";
     }
 
+    @Ignore
     @Test
     public void should_not_change_test_result_file_not_matching() throws IOException {
         createTestResultFile("RequireNoChangeTest", defaultClassName);
@@ -59,6 +61,7 @@ public class UpdateUnitTestResultsTaskTest {
         assertTestResultFileContentUnchanged(defaultXml, "RequireNoChangeTest");
     }
 
+    @Ignore
     @Test
     public void should_create_a_new_test_result_file_with_same_content_of_nested_runner_result() throws IOException, ParserConfigurationException, SAXException {
         createTestResultFile("RequireMergeTest$SubClass", "com.odde.bbuddy.RequireMergeTest$SubClass");
