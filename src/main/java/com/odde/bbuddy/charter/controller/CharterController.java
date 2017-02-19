@@ -1,6 +1,7 @@
 package com.odde.bbuddy.charter.controller;
 
 import com.odde.bbuddy.charter.domain.CharterCalculator;
+import com.odde.bbuddy.charter.domain.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ public class CharterController {
 
     @GetMapping("/fee_result")
     public String feeResult(Model model) {
-        model.addAttribute("result", calculator.calculate());
+        model.addAttribute("result", calculator.calculate(new Trip()));
         return "/charter/fee_result";
     }
 }

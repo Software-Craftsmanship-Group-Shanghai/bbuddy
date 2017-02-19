@@ -17,6 +17,6 @@ public class CarConfig {
 
     private int carFee;
     private int serviceFee;
-
-    private int driveAloneFee;
+    private int driveAloneFeePerHour;
+    private int driveAlonePeriod;
 }

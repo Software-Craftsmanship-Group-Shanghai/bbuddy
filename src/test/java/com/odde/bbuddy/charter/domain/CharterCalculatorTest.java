@@ -1,27 +1,50 @@
 package com.odde.bbuddy.charter.domain;
 
 import com.odde.bbuddy.charter.repo.CarConfig;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.when;
 
 public class CharterCalculatorTest {
-    @Test
-    public void calculateTest(){
-        CarConfigRepository carConfigRepository = mock(CarConfigRepository.class);
 
-        CarConfig config = new CarConfig();
-        config.setCarFee(30);
-        config.setServiceFee(530);
+    private CarConfigRepository carConfigRepository;
+    private CarConfig config;
+    private CharterCalculator calculator;
+    private DriverVendor driverVendor;
+    Driver stubDriver = mock(Driver.class);
+    Trip stubTrip = mock(Trip.class);
 
-        when(carConfigRepository.findAll()).thenReturn(Arrays.asList(config));
-
-        CharterCalculator calculator = new CharterCalculator(carConfigRepository);
-
-        assertThat(calculator.calculate()).isEqualTo(560);
+    @Before
+    public void setUp() {
+        carConfigRepository = mock(CarConfigRepository.class);
+        driverVendor = mock(DriverVendor.class);
+        config = new CarConfig();
+        calculator = new CharterCalculator(carConfigRepository, driverVendor);
     }
+
+    @Test
+    public void should_calculate_carFee_serviceFee_and_driverFee() {
+        given_car_config(30, 530);
+        given_driver_fee(100, stubTrip);
+
+        assertThat(calculator.calculate(stubTrip)).isEqualTo(660);
+    }
+
+    private void given_driver_fee(int fee, Trip trip) {
+        when(stubDriver.getFee()).thenReturn(fee);
+        when(driverVendor.findDriver(trip)).thenReturn(stubDriver);
+    }
+
+    private void given_car_config(int carFee, int serviceFee) {
+        config.setCarFee(carFee);
+        config.setServiceFee(serviceFee);
+        when(carConfigRepository.findAll()).thenReturn(asList(config));
+    }
+
 }
