@@ -6,5 +6,6 @@ import org.springframework.data.repository.Repository;
 public interface CarConfigRepositoryForTest extends Repository<CarConfig, Long> {
 
     void save(CarConfig carConfig);
+    void deleteAll();
 
 }

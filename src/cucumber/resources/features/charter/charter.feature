@@ -1,3 +1,4 @@
+@charter
 @user
 Feature: Charter
 
@@ -6,8 +7,9 @@ Feature: Charter
     When calculate
     Then result is 450
 
-
-    Given traffic fee 50 and driver service fee 400
-    And  non local driver cost 40
+  Scenario: Driver is not local
+    Given fee configuration is:
+    |car fee | service fee | drive alone fee |
+    |  50        |   400              | 40               |
     When calculate
     Then result is 490
