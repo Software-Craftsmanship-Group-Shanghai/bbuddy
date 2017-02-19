@@ -9,14 +9,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CharterControllerTest {
+
+    private CharterCalculator calculator = mock(CharterCalculator.class);
+    private CharterController controller = new CharterController(calculator);
+    private Model model = mock(Model.class);
+
     @Test
     public void get_result() {
-        CharterCalculator calculator = mock(CharterCalculator.class);
-        CharterController controller = new CharterController(calculator);
-        int feeResult = 530;
-        when(calculator.calculate()).thenReturn(feeResult);
-        Model model = mock(Model.class);
+        givenCalculatedFeeIs(530);
+
         controller.feeResult(model);
-        verify(model).addAttribute("result", feeResult);
+
+        verify(model).addAttribute("result", 530);
+    }
+
+    private void givenCalculatedFeeIs(int fee) {
+        when(calculator.calculate()).thenReturn(fee);
     }
 }
