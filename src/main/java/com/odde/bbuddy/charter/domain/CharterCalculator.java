@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CharterCalculator {
-    private final CalculatorConfig calculatorConfig;
+    private final CarConfigRepository carConfigRepository;
 
     @Autowired
-    public CharterCalculator(CalculatorConfig calculatorConfig) {
+    public CharterCalculator(CarConfigRepository carConfigRepository) {
 
-        this.calculatorConfig = calculatorConfig;
+        this.carConfigRepository = carConfigRepository;
     }
 
     public int calculate() {
-        return calculatorConfig.getCarFee()+calculatorConfig.getServiceFee();
+        return carConfigRepository.findAll().get(0).getCarFee()+ carConfigRepository.findAll().get(0).getServiceFee();
     }
 }
