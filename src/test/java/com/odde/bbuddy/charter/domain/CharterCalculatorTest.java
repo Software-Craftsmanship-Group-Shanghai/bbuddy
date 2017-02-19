@@ -8,7 +8,6 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.when;
 
 public class CharterCalculatorTest {
@@ -37,7 +36,7 @@ public class CharterCalculatorTest {
     }
 
     private void given_driver_fee(int fee, Trip trip) {
-        when(stubDriver.getFee()).thenReturn(fee);
+        when(stubDriver.getDriveAloneFee(trip)).thenReturn(fee);
         when(driverVendor.findDriver(trip)).thenReturn(stubDriver);
     }
 

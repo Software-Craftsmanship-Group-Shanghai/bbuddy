@@ -4,22 +4,28 @@ import com.odde.bbuddy.charter.repo.CarConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CharterCalculator {
     private final CarConfigRepository carConfigRepository;
     private final DriverVendor driverVendor;
 
     @Autowired
-    public CharterCalculator(CarConfigRepository carConfigRepository, DriverVendor driverVendor) {
+    public CharterCalculator(final CarConfigRepository carConfigRepository, final DriverVendor driverVendor) {
         this.carConfigRepository = carConfigRepository;
         this.driverVendor = driverVendor;
     }
 
     public int calculate(Trip trip) {
-        CarConfig carConfig = carConfigRepository.findAll().get(0);
+        List<CarConfig> configs = carConfigRepository.findAll();
+        if (configs.isEmpty()) {
+            return 9999;
+        }
+        CarConfig carConfig = configs.get(0);
         return carConfig.getCarFee()
                 + carConfig.getServiceFee()
-                + driverVendor.findDriver(trip).getFee();
+                + driverVendor.findDriver(trip).getDriveAloneFee(trip);
     }
 
 }
