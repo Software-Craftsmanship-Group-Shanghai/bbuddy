@@ -2,7 +2,6 @@ package com.odde.bbuddy.acceptancetest.steps;
 
 import com.odde.bbuddy.acceptancetest.data.charter.CarConfigRepositoryForTest;
 import com.odde.bbuddy.acceptancetest.driver.UiDriver;
-import com.odde.bbuddy.charter.domain.CarConfigRepository;
 import com.odde.bbuddy.charter.repo.CarConfig;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,16 +18,23 @@ public class CharterSteps {
     @Autowired
     CarConfigRepositoryForTest carConfigRepositoryForTest;
 
-    @Given("^xing che fei (\\d+) and fu wu fei (\\d+)$")
-    public void xing_che_fei_and_fu_wu_fei(int trafficFee, int serviceFee) throws Throwable {
-        CarConfig carConfig = new CarConfig();
+    private CarConfig carConfig = new CarConfig();
+
+    @Given("^traffic fee (\\d+) and driver service fee (\\d+)$")
+    public void traffic_fee_and_driver_service_fee(int trafficFee, int serviceFee) throws Throwable {
         carConfig.setCarFee(trafficFee);
         carConfig.setServiceFee(serviceFee);
-        carConfigRepositoryForTest.save(carConfig);
     }
 
-    @When("^ji suan$")
-    public void ji_suan() throws Throwable {
+    @Given("^non local driver cost (\\d+)$")
+    public void non_local_driver_cost(int driverAloneFee) throws Throwable {
+        carConfig.setDriveAloneFee(driverAloneFee);
+
+    }
+
+    @When("^calculate$")
+    public void calculate() throws Throwable {
+        carConfigRepositoryForTest.save(carConfig);
         uiDriver.navigateTo("/charter/fee_result");
     }
 

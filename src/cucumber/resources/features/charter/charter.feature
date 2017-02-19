@@ -2,6 +2,12 @@
 Feature: Charter
 
   Scenario: One day
-    Given xing che fei 50 and fu wu fei 400
-    When ji suan
+    Given traffic fee 50 and driver service fee 400
+    When calculate
     Then result is 450
+
+
+    Given traffic fee 50 and driver service fee 400
+    And  non local driver cost 40
+    When calculate
+    Then result is 490

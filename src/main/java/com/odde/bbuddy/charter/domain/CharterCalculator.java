@@ -14,6 +14,8 @@ public class CharterCalculator {
     }
 
     public int calculate() {
-        return carConfigRepository.findAll().get(0).getCarFee()+ carConfigRepository.findAll().get(0).getServiceFee();
+        return carConfigRepository.findAll().get(0).getCarFee()
+                + carConfigRepository.findAll().get(0).getServiceFee()
+                + carConfigRepository.findAll().get(0).getDriveAloneFee();
     }
 }
